@@ -30,7 +30,7 @@ Clone the project repository to your local machine:
 git clone https://github.com/yourusername/wildfire-detection.git
 cd wildfire-detection
 ```
-### Step 1: Clone the Repository
+### Step 2: Run the web app
 
 ```bash
 python app.py
