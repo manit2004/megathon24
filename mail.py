@@ -31,8 +31,8 @@ def send_email(to_email, subject, message):
         print(f"Error sending email: {e}")
 
 # Example usage
-send_email(
-    to_email="manit.roy@research.iiit.ac.in",  # Replace with recipient's email
-    subject="Test Email",
-    message="This is a test email sent from Python!"
-)
+# send_email(
+#     to_email="manit.roy@research.iiit.ac.in",  # Replace with recipient's email
+#     subject="Test Email",
+#     message="This is a test email sent from Python!"
+# )

@@ -20,6 +20,7 @@
         <button name="run_demo" onclick="rundemo()">Run Demo</button>
     </form>
     
+    
     <!-- Display the image preview based on coordinates -->
     <div>
         <h3>Map Preview:</h3>
@@ -30,7 +31,20 @@
             height="350"
             src="https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/{{ longitude }},{{ latitude }},15,0/350x350?access_token=pk.eyJ1IjoibWFuaXRyb3kiLCJhIjoiY20ycWd2dXdtMHZ4MTJrc2JybHd3cGUwcSJ9.yx0nRq4aBYh1Imo2vCiz7Q"
         />
+        <img src="{{ url_for('static', filename='heatmap.png') }}" alt="Heatmap" height="350" width="350">
     </div>
+    <h1>Top 5 Locations</h1>
+    <ul>
+        {% for location in locations %}
+            <li>
+                <strong>{{ location['name'] }}</strong><br>
+                Distance: {{ location['info']['distance_meters'] }} meters<br>
+                Contact: {{ location['info']['contact'] if location['info']['contact'] else "Not Available" }}<br>
+                Address: {{ location['info']['address'] }}
+            </li>
+            <br>
+        {% endfor %}
+    </ul>
 
     <script>
         // JavaScript to get current location and update coordinates
