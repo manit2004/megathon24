@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wildfire Prediction</title>
+</head>
+<body>
+    <h1>Wildfire Prediction</h1>
+    <form method="POST" action="/">
+        <label for="longitude">Longitude:</label>
+        <input type="text" id="longitude" name="longitude" value="{{ longitude }}" required>
+        <br>
+        <label for="latitude">Latitude:</label>
+        <input type="text" id="latitude" name="latitude" value="{{ latitude }}" required>
+        <br>
+        <button type="button" onclick="getCurrentLocation()">Use Current Location</button>
+        <br><br>
+        <button type="submit">Predict Wildfire</button>
+    </form>
+
+    <!-- Display the image preview based on coordinates -->
+    <div>
+        <h3>Map Preview:</h3>
+        <img 
+            id="mapImage"
+            alt="Mapbox satellite map"
+            width="350"
+            height="350"
+            src="https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/{{ longitude }},{{ latitude }},15,0/350x350?access_token=pk.eyJ1IjoibWFuaXRyb3kiLCJhIjoiY20ycWd2dXdtMHZ4MTJrc2JybHd3cGUwcSJ9.yx0nRq4aBYh1Imo2vCiz7Q"
+        />
+    </div>
+
+    <script>
+        // JavaScript to get current location and update coordinates
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    
+                    document.getElementById("latitude").value = latitude;
+                    document.getElementById("longitude").value = longitude;
+
+                    updateMapImage();
+                }, function(error) {
+                    alert("Unable to retrieve your location.");
+                    console.error(error);
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        document.querySelectorAll("#longitude, #latitude").forEach(input => {
+            input.addEventListener("input", updateMapImage);
+        });
+
+        function updateMapImage() {
+            const longitude = document.getElementById("longitude").value;
+            const latitude = document.getElementById("latitude").value;
+            const accessToken = "pk.eyJ1IjoibWFuaXRyb3kiLCJhIjoiY20ycWd2dXdtMHZ4MTJrc2JybHd3cGUwcSJ9.yx0nRq4aBYh1Imo2vCiz7Q";
+            document.getElementById("mapImage").src = `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/${longitude},${latitude},15,0/350x350?access_token=${accessToken}`;
+        }
+
+        // Show alert if alert_message is present
+        {% if alert_message %}
+            alert("{{ alert_message }}");
+        {% endif %}
+    </script>
+
+    <!-- Display the prediction result and duration if available -->
+    {% if result %}
+        <h2>Prediction Result: {{ result }}</h2>
+        <h3>Time Taken: {{ duration | round(2) }} seconds</h3>
+    {% endif %}
+</body>
+</html>
