@@ -52,10 +52,13 @@ def index():
         image_url = f"https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/{longitude},{latitude},15,0/350x350?access_token=pk.eyJ1IjoibWFuaXRyb3kiLCJhIjoiY20ycWd2dXdtMHZ4MTJrc2JybHd3cGUwcSJ9.yx0nRq4aBYh1Imo2vCiz7Q"
         
         # Download the image
-        image_path = "test.jpg"
-        response = requests.get(image_url)
-        with open(image_path, "wb") as file:
-            file.write(response.content)
+        if "run_demo" in request.form:
+            image_path = "static/demo.jpg"
+        else:
+            image_path = "test.jpg"
+            response = requests.get(image_url)
+            with open(image_path, "wb") as file:
+                file.write(response.content)
         
         # Run prediction on the downloaded image and get the alert message
         result, alert_message = predict_image(image_path,latitude,longitude)
@@ -64,7 +67,8 @@ def index():
         duration = time.time() - start_time
 
         # Optionally delete the image after prediction to free up space
-        os.remove(image_path)
+        if "run_demo" not in request.form:
+            os.remove(image_path)
 
     return render_template("index.html", result=result, duration=duration, alert_message=alert_message, longitude=longitude, latitude=latitude)
 

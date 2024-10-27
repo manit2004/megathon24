@@ -17,8 +17,9 @@
         <button type="button" onclick="getCurrentLocation()">Use Current Location</button>
         <br><br>
         <button type="submit">Predict Wildfire</button>
+        <button name="run_demo" onclick="rundemo()">Run Demo</button>
     </form>
-
+    
     <!-- Display the image preview based on coordinates -->
     <div>
         <h3>Map Preview:</h3>
@@ -33,6 +34,10 @@
 
     <script>
         // JavaScript to get current location and update coordinates
+        function rundemo(){
+            document.getElementById("mapImage").src = "{{ url_for('static', filename='demo.jpg') }}";
+        }
+        
         function getCurrentLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
@@ -62,6 +67,7 @@
             const accessToken = "pk.eyJ1IjoibWFuaXRyb3kiLCJhIjoiY20ycWd2dXdtMHZ4MTJrc2JybHd3cGUwcSJ9.yx0nRq4aBYh1Imo2vCiz7Q";
             document.getElementById("mapImage").src = `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/${longitude},${latitude},15,0/350x350?access_token=${accessToken}`;
         }
+
 
         // Show alert if alert_message is present
         {% if alert_message %}

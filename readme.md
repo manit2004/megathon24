@@ -27,7 +27,7 @@ This project is a web application that predicts the likelihood of a wildfire bas
 Clone the project repository to your local machine:
 
 ```bash
-git clone https://github.com/yourusername/wildfire-detection.git
+git clone https://github.com/manit2004/wildfire-detection.git
 cd wildfire-detection
 ```
 ### Step 2: Run the web app
