@@ -12,6 +12,7 @@ import seaborn as sns
 from location_info import get_location_info
 
 app = Flask(__name__)
+mapbox_api_key= "pk.eyJ1IjoibWFuaXRyb3kiLCJhIjoiY20ycWd2dXdtMHZ4MTJrc2JybHd3cGUwcSJ9.yx0nRq4aBYh1Imo2vCiz7Q"
 
 # Load the trained model once when the app starts
 model = load_model('wildfire_model.h5')
@@ -207,7 +208,7 @@ def index():
             result_row = []
             for lat, lon in row:
                 # Generate the Mapbox image URL for each grid center
-                image_url = f"https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/{lon},{lat},15,0/350x350?access_token=pk.eyJ1IjoibWFuaXRyb3kiLCJhIjoiY20ycWd2dXdtMHZ4MTJrc2JybHd3cGUwcSJ9.yx0nRq4aBYh1Imo2vCiz7Q"
+                image_url = f"https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/{lon},{lat},15,0/350x350?access_token={mapbox_api_key}"
                 
                 # Download the image for the current grid center
                 image_path = "temp_image.jpg"  # Temporary path for each image
@@ -240,7 +241,7 @@ def index():
         # print(transformed_matrix)
 
         # Generate the Mapbox image URL
-        image_url = f"https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/{longitude},{latitude},15,0/350x350?access_token=pk.eyJ1IjoibWFuaXRyb3kiLCJhIjoiY20ycWd2dXdtMHZ4MTJrc2JybHd3cGUwcSJ9.yx0nRq4aBYh1Imo2vCiz7Q"
+        image_url = f"https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/{longitude},{latitude},15,0/350x350?access_token={mapbox_api_key}"
         info=get_location_info(float(latitude),float(longitude))
         locations = extract_top_5_locations(info)
         print(locations)
@@ -264,7 +265,7 @@ def index():
         if "run_demo" not in request.form:
             os.remove(image_path)
 
-    return render_template("index.html", result=result, duration=duration, alert_message=alert_message, longitude=longitude, latitude=latitude, locations=locations)
+    return render_template("index.html", result=result, duration=duration, alert_message=alert_message, longitude=longitude, latitude=latitude, locations=locations, mapbox_api_key=mapbox_api_key)
 
 
 

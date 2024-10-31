@@ -29,7 +29,7 @@
             alt="Mapbox satellite map"
             width="350"
             height="350"
-            src="https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/{{ longitude }},{{ latitude }},15,0/350x350?access_token=pk.eyJ1IjoibWFuaXRyb3kiLCJhIjoiY20ycWd2dXdtMHZ4MTJrc2JybHd3cGUwcSJ9.yx0nRq4aBYh1Imo2vCiz7Q"
+            src="https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/{{ longitude }},{{ latitude }},15,0/350x350?access_token={{ mapbox_api_key }}"
         />
         <img src="{{ url_for('static', filename='heatmap.png') }}" alt="Heatmap" height="350" width="350">
     </div>
@@ -78,7 +78,7 @@
         function updateMapImage() {
             const longitude = document.getElementById("longitude").value;
             const latitude = document.getElementById("latitude").value;
-            const accessToken = "pk.eyJ1IjoibWFuaXRyb3kiLCJhIjoiY20ycWd2dXdtMHZ4MTJrc2JybHd3cGUwcSJ9.yx0nRq4aBYh1Imo2vCiz7Q";
+            const mapbox_api_key = "pk.eyJ1IjoibWFuaXRyb3kiLCJhIjoiY20ycWd2dXdtMHZ4MTJrc2JybHd3cGUwcSJ9.yx0nRq4aBYh1Imo2vCiz7Q";
             document.getElementById("mapImage").src = `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/${longitude},${latitude},15,0/350x350?access_token=${accessToken}`;
         }
 

@@ -30,7 +30,11 @@ Clone the project repository to your local machine:
 git clone https://github.com/manit2004/wildfire-detection.git
 cd wildfire-detection
 ```
-### Step 2: Run the web app
+### Step 2: MapBox API Key and Google App password
+
+Put the mapbox api key in the appropiate places of index.html and app.py and put the Google App password in the mail.py
+
+### Step 3: Run the web app
 
 ```bash
 python app.py
